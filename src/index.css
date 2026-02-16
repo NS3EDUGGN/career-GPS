@@ -1,0 +1,160 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html, body {
+  overflow-x: hidden;
+}
+
+/* ===== GREEN MODERN STATS SECTION ===== */
+
+.stats-section{
+  position: relative;
+  padding:130px 20px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(16,185,129,0.35), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(52,211,153,0.30), transparent 40%),
+    linear-gradient(135deg,#02140f,#031b14,#02140f);
+  color:white;
+}
+
+/* floating blurred glow orbs */
+.stats-section::before,
+.stats-section::after{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  filter:blur(130px);
+  opacity:0.45;
+  z-index:0;
+  animation: floatOrb 12s ease-in-out infinite alternate;
+}
+
+.stats-section::before{
+  background:#34d399;
+  top:-120px;
+  left:-120px;
+}
+
+.stats-section::after{
+  background:#10b981;
+  bottom:-140px;
+  right:-140px;
+}
+
+@keyframes floatOrb{
+  from{ transform: translateY(0px); }
+  to{ transform: translateY(60px); }
+}
+
+/* heading */
+.stats-title{
+  text-align:center;
+  font-size:38px;
+  font-weight:800;
+  margin-bottom:65px;
+  letter-spacing:0.5px;
+  background:linear-gradient(90deg,#6ee7b7,#10b981);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* container */
+.stats-container{
+  position:relative;
+  z-index:2;
+  max-width:1150px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:30px;
+}
+
+/* cards */
+.stat-box{
+  position:relative;
+  padding:42px 20px;
+  border-radius:24px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border:1px solid rgba(255,255,255,0.12);
+  transition: all .35s cubic-bezier(.17,.67,.3,1.33);
+  text-align:center;
+  overflow:hidden;
+}
+
+/* glowing border animation */
+.stat-box::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:24px;
+  padding:1px;
+  background:linear-gradient(120deg, transparent, #34d399, transparent);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  opacity:0;
+  transition:0.4s;
+}
+
+.stat-box:hover::after{
+  opacity:1;
+}
+
+/* hover lift */
+.stat-box:hover{
+  transform:translateY(-16px) scale(1.03);
+  box-shadow:0 25px 70px rgba(16,185,129,0.35);
+}
+
+/* animated numbers */
+.stat-box h2{
+  font-size:52px;
+  font-weight:900;
+  margin-bottom:12px;
+  background:linear-gradient(90deg,#6ee7b7,#10b981);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:1px;
+}
+
+/* labels */
+.stat-box p{
+  font-size:17px;
+  opacity:0.85;
+  letter-spacing:0.4px;
+}
+
+/* subtle pulse on hover */
+.stat-box:hover h2{
+  animation:pulse 1s ease;
+}
+
+@keyframes pulse{
+  0%{ transform:scale(1); }
+  50%{ transform:scale(1.15); }
+  100%{ transform:scale(1); }
+}
+
+/* responsive */
+@media(max-width:1000px){
+  .stats-container{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:520px){
+  .stats-container{
+    grid-template-columns:1fr;
+  }
+  .stats-title{
+    font-size:28px;
+  }
+}
