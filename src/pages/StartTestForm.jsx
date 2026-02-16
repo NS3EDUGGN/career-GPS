@@ -36,15 +36,16 @@ function StartTestForm() {
         )
       }
         */}
-
-      await fetch("http://localhost:5000/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          password: data.password,
-        }),
+await fetch("/api/register", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    name,
+    email,
+    password
+  })
       })
 
       navigate("/login")
@@ -184,3 +185,4 @@ function StartTestForm() {
 }
 
 export default StartTestForm
+
