@@ -19,11 +19,12 @@ function Login() {
   setLoading(true)
 
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      })
+      const res = await fetch("/api/login", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ email, password }),
+})
+
 
       if (!res.ok) {
         alert("Incorrect credentials, try again")
@@ -128,3 +129,4 @@ localStorage.setItem("userEmail", data.email || email)
 }
 
 export default Login
+
