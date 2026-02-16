@@ -6,6 +6,33 @@ function Result() {
   
   const location = useLocation()
 const [scores, setScores] = useState(null)
+  useEffect(() => {
+
+  if (!scores) return
+
+  const submitResult = async () => {
+    const email = localStorage.getItem("userEmail")
+
+    try {
+      await fetch("/api/submitTest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email,
+          scores: scores
+        })
+      })
+    } catch (err) {
+      console.log("Could not save result")
+    }
+  }
+
+  submitResult()
+
+}, [scores])
+
 
 useEffect(() => {
   // first try router state
@@ -592,3 +619,4 @@ function ReviewPopup({ onClose }) {
 }
 
 export default Result
+
