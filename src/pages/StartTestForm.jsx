@@ -9,51 +9,42 @@ function StartTestForm() {
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+  e.preventDefault()
+  setLoading(true)
 
-    const formData = new FormData(formRef.current)
-    const data = Object.fromEntries(formData)
+  const formData = new FormData(formRef.current)
+  const data = Object.fromEntries(formData)
 
-    const { password, ...leadData } = data
+  try {
 
-    try {
-      await fetch("http://localhost:5000/api/lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(leadData),
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        password: data.password
       })
+    })
 
-      formRef.current.password.value = ""
+    const result = await res.json()
 
-      {/* 
-      if (emailjs?.sendForm) {
-        await emailjs.sendForm(
-          "service_zoq17qo",
-          "template_aes52t8",
-          formRef.current,
-          "g47AuvieCWG4013xG"
-        )
-      }
-        */}
-await fetch("/api/register", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    name,
-    email,
-    password
-  })
-      })
-
-      navigate("/login")
-    } catch (err) {
-      alert("Something went wrong")
+    if (!res.ok) {
+      alert(result.message)
       setLoading(false)
+      return
     }
+
+    alert("Account created successfully")
+    navigate("/login")
+
+  } catch (err) {
+    alert("Server error. Please try again.")
+    setLoading(false)
   }
+}
 
   return (
    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-50 via-green-100 to-teal-50 px-4 pt-24 pb-12">
@@ -185,4 +176,5 @@ await fetch("/api/register", {
 }
 
 export default StartTestForm
+
 
