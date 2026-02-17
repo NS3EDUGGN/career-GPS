@@ -37,7 +37,7 @@ function Navbar() {
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 120, damping: 16 }}
-        className="sticky top-0 z-40 backdrop-blur-2xl bg-gradient-to-r from-white/60 via-white/80 to-white/60 border-b border-white/30 shadow-[0_10px_40px_rgba(0,0,0,0.06)]"
+        className="sticky top-0 z-40 backdrop-blur-2xl bg-gradient-to-r from-white/60 via-white/80 to-white/60 border-b border-white/30 shadow-[0_10px_40px_rgba(0,0,0,0.06)] relative"
       >
 
         {/* moving shine effect */}
@@ -99,24 +99,22 @@ function Navbar() {
               )
             })}
 
-            {/* EXPLORE */}
+            {/* EXPLORE BUTTON */}
             <div
-              className="relative"
+              className="py-2"
               onMouseEnter={() => setShowExplore(true)}
               onMouseLeave={() => setShowExplore(false)}
             >
               <button className="px-4 py-2 rounded-full font-medium text-gray-700 hover:bg-green-50">
                 Explore ▾
               </button>
-
-              {showExplore && <ExploreDropdown />}
             </div>
+
           </div>
 
           {/* RIGHT SIDE BUTTONS (DESKTOP ONLY) */}
           <div className="hidden md:flex items-center gap-3">
 
-            {/* Protected page email */}
             {isProtectedPage && userEmail && (
               <div className="flex items-center gap-3">
                 <span className="px-4 py-2 rounded-xl bg-white/70 text-gray-800 font-semibold shadow">
@@ -132,7 +130,6 @@ function Navbar() {
               </div>
             )}
 
-            {/* Register */}
             {!isStartTest && !isProtectedPage && (
               <Link
                 to="/start-test"
@@ -142,7 +139,6 @@ function Navbar() {
               </Link>
             )}
 
-            {/* Login */}
             {!isLogin && !isProtectedPage && (
               <Link
                 to="/login"
@@ -154,6 +150,18 @@ function Navbar() {
 
           </div>
         </div>
+
+        {/* ===== FIXED MEGA MENU ===== */}
+        {showExplore && (
+          <div
+            className="absolute left-0 top-full w-full bg-white shadow-2xl border-t border-gray-200 z-50"
+            onMouseEnter={() => setShowExplore(true)}
+            onMouseLeave={() => setShowExplore(false)}
+          >
+            <ExploreDropdown />
+          </div>
+        )}
+
       </motion.nav>
 
       {/* MOBILE DRAWER */}
@@ -187,7 +195,7 @@ export default Navbar
 
 function ExploreDropdown() {
   return (
-    <div className="absolute left-0 top-full w-full bg-white shadow-2xl border-t border-gray-200 z-40">
+    <div className="w-full">
 
       <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 
@@ -200,10 +208,7 @@ function ExploreDropdown() {
           <div className="space-y-4 max-h-[380px] overflow-y-auto pr-2">
             {exploreMenuData.careers.map((career, index) => (
               <div key={index}>
-                <h3 className="font-semibold text-[#2F6F6A]">
-                  {career.title}
-                </h3>
-
+                <h3 className="font-semibold text-[#2F6F6A]">{career.title}</h3>
                 <ul className="text-sm text-gray-600 ml-2 mt-1 space-y-1">
                   {career.roles.map((role, i) => (
                     <li key={i}>
