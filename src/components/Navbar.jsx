@@ -165,25 +165,69 @@ function Navbar() {
       </motion.nav>
 
       {/* MOBILE DRAWER */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-50 bg-black/40">
-          <div className="fixed top-0 right-0 h-full w-72 bg-white shadow-2xl p-6 flex flex-col gap-5">
+{mobileOpen && (
+  <div className="fixed inset-0 z-50 bg-black/40">
+    <div className="fixed top-0 right-0 h-full w-72 bg-white shadow-2xl p-6 flex flex-col gap-5">
 
-            <button
-              className="self-end text-2xl"
-              onClick={() => setMobileOpen(false)}
-            >
-              ✕
-            </button>
+      {/* Close button */}
+      <button
+        className="self-end text-2xl"
+        onClick={() => setMobileOpen(false)}
+      >
+        ✕
+      </button>
 
-            <Link to="/" onClick={()=>setMobileOpen(false)} className="font-semibold text-lg">Home</Link>
-            <Link to="/diagnosis" onClick={()=>setMobileOpen(false)} className="font-semibold text-lg">About</Link>
-            <Link to="/start-test" onClick={()=>setMobileOpen(false)} className="bg-green-500 text-white px-4 py-3 rounded-xl text-center font-semibold">Register</Link>
-            <Link to="/login" onClick={()=>setMobileOpen(false)} className="bg-teal-500 text-white px-4 py-3 rounded-xl text-center font-semibold">Login</Link>
+      {/* Common Links */}
+      <Link to="/" onClick={()=>setMobileOpen(false)} className="font-semibold text-lg">
+        Home
+      </Link>
 
+      <Link to="/diagnosis" onClick={()=>setMobileOpen(false)} className="font-semibold text-lg">
+        About
+      </Link>
+
+      {/* ===== LOGGED IN VIEW ===== */}
+      {userEmail ? (
+        <>
+          <div className="mt-4 p-3 rounded-xl bg-gray-100 font-semibold break-all">
+            {userEmail}
           </div>
-        </div>
+
+          <button
+            onClick={() => {
+              handleLogout()
+              setMobileOpen(false)
+            }}
+            className="bg-red-500 text-white px-4 py-3 rounded-xl text-center font-semibold"
+          >
+            Logout
+          </button>
+        </>
+      ) : (
+        <>
+          {/* ===== NOT LOGGED IN VIEW ===== */}
+          <Link
+            to="/start-test"
+            onClick={()=>setMobileOpen(false)}
+            className="bg-green-500 text-white px-4 py-3 rounded-xl text-center font-semibold"
+          >
+            Register
+          </Link>
+
+          <Link
+            to="/login"
+            onClick={()=>setMobileOpen(false)}
+            className="bg-teal-500 text-white px-4 py-3 rounded-xl text-center font-semibold"
+          >
+            Login
+          </Link>
+        </>
       )}
+
+    </div>
+  </div>
+)}
+
     </>
   )
 }
@@ -260,3 +304,4 @@ function ExploreDropdown() {
     </div>
   )
 }
+
