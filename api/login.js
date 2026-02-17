@@ -32,15 +32,20 @@ export default async function handler(req, res) {
       scores: Object
     })
 
-    const User =
-      mongoose.models.User || mongoose.model("User", userSchema)
+    const User = mongoose.models.User || mongoose.model("User", userSchema)
 
     const { email, password } = req.body
 
-    const user = await User.findOne({ email })
+    // 🔴 important change
+    const user = await User.findOne({ email: email.trim() })
 
-    if (!user || user.password !== password) {
-      return res.status(401).json({ message: "Invalid credentials" })
+    if (!user) {
+      return res.status(401).json({ message: "User not found" })
+    }
+
+    // compare properly
+    if (String(user.password).trim() !== String(password).trim()) {
+      return res.status(401).json({ message: "Wrong password" })
     }
 
     return res.status(200).json({
