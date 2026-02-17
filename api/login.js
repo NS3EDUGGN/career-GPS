@@ -2,29 +2,17 @@ import mongoose from "mongoose"
 
 const MONGO_URI = process.env.MONGO_URI
 
-let cached = global.mongoose || { conn: null, promise: null }
-global.mongoose = cached
+let isConnected = false
 
 async function connectDB() {
-  if (cached.conn) return cached.conn
+  if (isConnected) return
 
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGO_URI).then(m => m)
-  }
+  await mongoose.connect(MONGO_URI, {
+    dbName: "resume"
+  })
 
-  cached.conn = await cached.promise
-  return cached.conn
+  isConnected = true
 }
-
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-  testGiven: { type: Boolean, default: false },
-  scores: Object
-})
-
-const User = mongoose.models.User || mongoose.model("User", userSchema)
 
 export default async function handler(req, res) {
 
@@ -33,7 +21,19 @@ export default async function handler(req, res) {
   }
 
   try {
+
     await connectDB()
+
+    const userSchema = new mongoose.Schema({
+      name: String,
+      email: String,
+      password: String,
+      testGiven: { type: Boolean, default: false },
+      scores: Object
+    })
+
+    const User =
+      mongoose.models.User || mongoose.model("User", userSchema)
 
     const { email, password } = req.body
 
@@ -43,13 +43,14 @@ export default async function handler(req, res) {
       return res.status(401).json({ message: "Invalid credentials" })
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Login successful",
       email: user.email,
       testGiven: user.testGiven
     })
 
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    console.log(err)
+    return res.status(500).json({ message: err.message })
   }
 }
