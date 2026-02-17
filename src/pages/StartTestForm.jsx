@@ -1,35 +1,38 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 
 function StartTestForm() {
 
-  const formRef = useRef()
   const navigate = useNavigate()
+
+  // form states
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [phone, setPhone] = useState("")
   const [interest, setInterest] = useState("")
+  const [otherInterest, setOtherInterest] = useState("")
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
 
-    const formData = new FormData(formRef.current)
-    const data = Object.fromEntries(formData)
-
     try {
 
-      // 1️⃣ REGISTER USER (MongoDB)
+      // 1️⃣ REGISTER USER → MongoDB + Google Sheet
       const res = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          password: data.password,
-          phone: data.phone,
-          interest: data.interest,
-          other_interest: data.other_interest
+          name,
+          email,
+          password,
+          phone,
+          interest,
+          other_interest: otherInterest
         })
       })
 
@@ -41,17 +44,17 @@ function StartTestForm() {
         return
       }
 
-      // 2️⃣ SEND EMAIL (EmailJS through Vercel backend)
+      // 2️⃣ SEND EMAIL → EmailJS via Vercel backend
       await fetch("/api/sendMail", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          interest: data.interest
+          name,
+          email,
+          phone,
+          interest
         })
       })
 
@@ -66,20 +69,9 @@ function StartTestForm() {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-50 via-green-100 to-teal-50 px-4 pt-24 pb-12">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-green-100 to-teal-50 px-4 pt-24 pb-12">
 
-      {/* background blobs */}
-      <div className="absolute w-[600px] h-[600px] bg-emerald-200/40 rounded-full blur-3xl -left-40 top-10"></div>
-      <div className="absolute w-[500px] h-[500px] bg-teal-200/40 rounded-full blur-3xl -right-40 bottom-0"></div>
-      <div className="absolute w-[300px] h-[300px] bg-green-300/30 rounded-full blur-3xl right-1/3 -top-20"></div>
-
-      <div className="relative w-full max-w-2xl backdrop-blur-xl bg-white/65 border border-white/40 rounded-3xl shadow-2xl p-10">
-
-        <div className="flex justify-center mb-6">
-          <div className="px-5 py-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-semibold shadow-md">
-            Career Diagnosis Registration
-          </div>
-        </div>
+      <div className="relative w-full max-w-2xl backdrop-blur-xl bg-white/70 rounded-3xl shadow-2xl p-10">
 
         <h2 className="text-3xl font-bold text-gray-900 text-center">
           Start Your Career Diagnosis
@@ -88,46 +80,54 @@ function StartTestForm() {
           Tell us a little about yourself before we begin
         </p>
 
-        <form ref={formRef} onSubmit={handleSubmit} className="mt-8 space-y-5">
+        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
 
+          {/* NAME */}
           <input
             type="text"
-            name="name"
             placeholder="Full Name"
+            value={name}
+            onChange={(e)=>setName(e.target.value)}
             required
-            className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 focus:ring-2 focus:ring-emerald-400 outline-none"
+            className="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none"
           />
 
+          {/* EMAIL */}
           <input
             type="email"
-            name="email"
             placeholder="Email Address"
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
             required
-            className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 focus:ring-2 focus:ring-emerald-400 outline-none"
+            className="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none"
           />
 
+          {/* PASSWORD */}
           <input
             type="password"
-            name="password"
             placeholder="Create Password"
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}
             required
-            className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 focus:ring-2 focus:ring-emerald-400 outline-none"
+            className="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none"
           />
 
+          {/* PHONE */}
           <input
             type="tel"
-            name="phone"
             placeholder="Phone Number"
+            value={phone}
+            onChange={(e)=>setPhone(e.target.value)}
             required
-            className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 focus:ring-2 focus:ring-emerald-400 outline-none"
+            className="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none"
           />
 
+          {/* INTEREST */}
           <select
-            name="interest"
-            required
             value={interest}
-            onChange={(e) => setInterest(e.target.value)}
-            className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 focus:ring-2 focus:ring-emerald-400 outline-none"
+            onChange={(e)=>setInterest(e.target.value)}
+            required
+            className="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none"
           >
             <option value="">Select Primary Interest</option>
             <option>Software Development</option>
@@ -139,16 +139,19 @@ function StartTestForm() {
             <option>Others</option>
           </select>
 
+          {/* OTHER INTEREST */}
           {interest === "Others" && (
             <input
               type="text"
-              name="other_interest"
               placeholder="Please specify your interest"
+              value={otherInterest}
+              onChange={(e)=>setOtherInterest(e.target.value)}
               required
-              className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 focus:ring-2 focus:ring-emerald-400 outline-none"
+              className="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none"
             />
           )}
 
+          {/* BUTTON */}
           <button
             type="submit"
             disabled={loading}
@@ -158,10 +161,6 @@ function StartTestForm() {
           </button>
 
         </form>
-
-        <p className="text-xs text-gray-500 text-center mt-5">
-          🔒 Your information is safe and used only for career guidance
-        </p>
 
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600">
