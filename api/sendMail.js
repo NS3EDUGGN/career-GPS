@@ -10,7 +10,8 @@ export default async function handler(req, res) {
 
   try {
 
-    const { name, email, phone, interest } = req.body
+    const { name, email, phone, interest, other_interest } = req.body
+
 
     // Create form data (IMPORTANT)
     const formData = new FormData()
@@ -24,6 +25,7 @@ export default async function handler(req, res) {
     formData.append("template_params[email]", email)
     formData.append("template_params[phone]", phone)
     formData.append("template_params[interest]", interest)
+    formData.append("template_params[other_interest]", other_interest)
 
     const response = await fetch(
       "https://api.emailjs.com/api/v1.0/email/send-form",
