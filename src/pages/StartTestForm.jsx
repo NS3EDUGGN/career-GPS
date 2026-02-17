@@ -44,6 +44,19 @@ function StartTestForm() {
     alert("Server error. Please try again.")
     setLoading(false)
   }
+    await fetch("/api/sendMail", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    interest: data.interest
+  })
+})
+
 }
 
   return (
@@ -176,6 +189,7 @@ function StartTestForm() {
 }
 
 export default StartTestForm
+
 
 
 
