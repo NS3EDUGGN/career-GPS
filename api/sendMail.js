@@ -1,7 +1,7 @@
-
 export const config = {
   runtime: "nodejs"
 }
+
 export default async function handler(req, res) {
 
   if (req.method !== "POST") {
@@ -15,18 +15,18 @@ export default async function handler(req, res) {
     const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.EMAILJS_PRIVATE}`
       },
       body: JSON.stringify({
         service_id: process.env.EMAILJS_SERVICE,
         template_id: process.env.EMAILJS_TEMPLATE,
-        accessToken: process.env.EMAILJS_PRIVATE,
-
+        user_id: process.env.EMAILJS_PUBLIC,   // PUBLIC KEY HERE
         template_params: {
-          name: name,
-          email: email,
-          phone: phone,
-          interest: interest
+          name,
+          email,
+          phone,
+          interest
         }
       })
     })
