@@ -47,17 +47,16 @@ export default async function handler(req, res) {
     await User.create({ name, email, password })
     // send to google sheet
 await fetch("https://script.google.com/macros/s/AKfycbw60kk4O_cGwpVYB8oloSX5Qh8sUdNHqbWiWVtJ5rhJ-lWQ9HYPUlZt-lzzibZRl75-/exec", {
-  method: "POST",
+ method: "POST",
   headers: {
     "Content-Type": "application/json"
   },
   body: JSON.stringify({
-    name,
-    email,
-    phone,
-    interest,
-    other,
-    password
+    name: name,
+    email: email,
+    phone: phone,
+    interest: interest,
+    other: other_interest
   })
 })
 
