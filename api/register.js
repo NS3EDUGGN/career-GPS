@@ -53,6 +53,9 @@ await fetch("https://script.google.com/macros/s/AKfycbw60kk4O_cGwpVYB8oloSX5Qh8s
   body: JSON.stringify({
     name,
     email,
+    phone,
+    interest,
+    others,
     password
   })
 })
