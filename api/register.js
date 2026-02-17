@@ -46,17 +46,20 @@ export default async function handler(req, res) {
 
     await User.create({ name, email, password })
     // send to google sheet
-const params = new URLSearchParams()
-params.append("name", name)
-params.append("email", email)
-params.append("phone", phone)
-params.append("interest", interest)
-params.append("other", other_interest)
-
-await fetch("https://script.google.com/macros/s/AKfycbyIue5yHzPK3szBBK_PM90bW4qOc9gVUms9-uiIGIpgVSTmWpkMogQBNchbw0e6ekeI/exec", {
+    await fetch("https://script.google.com/macros/s/AKfycbwmm2CNZaisE_EyRDd7zhILgHlE6c7lMaN-OZmlPrAI8sfODCPC7J19IyP_73XNw9B6/exec", {
   method: "POST",
-  body: params
+  headers: {
+    "Content-Type": "text/plain;charset=utf-8"
+  },
+  body: JSON.stringify({
+    name: name,
+    email: email,
+    phone: phone,
+    interest: interest,
+    other: other_interest
+  })
 })
+
 
 
     return res.status(200).json({ message: "Registered Successfully" })
