@@ -11,6 +11,11 @@ function StartTestForm() {
   const [password, setPassword] = useState("")
   const [phone, setPhone] = useState("")
   const [interest, setInterest] = useState("")
+  useEffect(() => {
+  if (interest !== "Others") {
+    setOtherInterest("")
+  }
+}, [interest])
   const [otherInterest, setOtherInterest] = useState("")
   const [loading, setLoading] = useState(false)
 
@@ -54,7 +59,8 @@ function StartTestForm() {
           name,
           email,
           phone,
-          interest
+          interest,
+          other_interest: otherInterest
         })
       })
 
@@ -177,3 +183,4 @@ function StartTestForm() {
 }
 
 export default StartTestForm
+
