@@ -17,6 +17,7 @@ function StartTestForm() {
 
   try {
 
+    // register user
     const res = await fetch("/api/register", {
       method: "POST",
       headers: {
@@ -28,6 +29,36 @@ function StartTestForm() {
         password: data.password
       })
     })
+
+    const result = await res.json()
+
+    if (!res.ok) {
+      alert(result.message)
+      setLoading(false)
+      return
+    }
+
+    // NOW send email
+    await fetch("/api/sendMail", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        interest: data.interest
+      })
+    })
+
+    alert("Account created successfully")
+    navigate("/login")
+
+  } catch (err) {
+    alert("Server error. Please try again.")
+    setLoading(false)
+  }
+}
+
 
     const result = await res.json()
 
@@ -189,6 +220,7 @@ function StartTestForm() {
 }
 
 export default StartTestForm
+
 
 
 
