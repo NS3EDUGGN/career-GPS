@@ -55,7 +55,7 @@ await fetch("https://script.google.com/macros/s/AKfycbw60kk4O_cGwpVYB8oloSX5Qh8s
     email,
     phone,
     interest,
-    others,
+    other,
     password
   })
 })
