@@ -16,12 +16,12 @@ export default async function handler(req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.EMAILJS_PRIVATE}`
+        "X-EmailJS-Private-Key": process.env.EMAILJS_PRIVATE
       },
       body: JSON.stringify({
         service_id: process.env.EMAILJS_SERVICE,
         template_id: process.env.EMAILJS_TEMPLATE,
-        user_id: process.env.EMAILJS_PUBLIC,   // PUBLIC KEY HERE
+        user_id: process.env.EMAILJS_PUBLIC,
         template_params: {
           name,
           email,
