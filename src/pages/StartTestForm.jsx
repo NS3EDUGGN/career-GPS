@@ -23,11 +23,15 @@ function StartTestForm() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        password: data.password
-      })
+body: JSON.stringify({
+  name: data.name,
+  email: data.email,
+  password: data.password,
+  phone: data.phone,
+  interest: data.interest,
+  other_interest: data.other_interest
+})
+
     })
 
     const result = await res.json()
@@ -220,6 +224,7 @@ function StartTestForm() {
 }
 
 export default StartTestForm
+
 
 
 
