@@ -25,7 +25,10 @@ export default async function handler(req, res) {
     formData.append("template_params[email]", email)
     formData.append("template_params[phone]", phone)
     formData.append("template_params[interest]", interest)
-    formData.append("template_params[other_interest]", other_interest)
+    formData.append(
+  "template_params[other_interest]",
+  other_interest || "Not specified"
+)
 
     const response = await fetch(
       "https://api.emailjs.com/api/v1.0/email/send-form",
