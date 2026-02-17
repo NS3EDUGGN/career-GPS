@@ -16,7 +16,7 @@ function Navbar() {
 const handleLogout = () => {
   localStorage.clear()
   sessionStorage.clear()
-  window.location.href = "/login"
+  window.location.href = "/"
 }
 
 
@@ -240,4 +240,5 @@ function ExploreDropdown() {
     </div>
   )
 }
+
 
