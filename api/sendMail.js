@@ -1,5 +1,7 @@
 import fetch from "node-fetch"
-
+export const config = {
+  runtime: "nodejs"
+}
 export default async function handler(req, res) {
 
   if (req.method !== "POST") {
