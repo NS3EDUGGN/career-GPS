@@ -53,7 +53,7 @@ params.append("phone", phone)
 params.append("interest", interest)
 params.append("other", other_interest)
 
-await fetch("https://script.google.com/macros/s/AKfycbw60kk4O_cGwpVYB8oloSX5Qh8sUdNHqbWiWVtJ5rhJ-lWQ9HYPUlZt-lzzibZRl75-/exec", {
+await fetch("https://script.google.com/macros/s/AKfycbyIue5yHzPK3szBBK_PM90bW4qOc9gVUms9-uiIGIpgVSTmWpkMogQBNchbw0e6ekeI/exec", {
   method: "POST",
   body: params
 })
