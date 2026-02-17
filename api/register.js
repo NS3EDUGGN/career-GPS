@@ -36,7 +36,8 @@ export default async function handler(req, res) {
     const User =
       mongoose.models.User || mongoose.model("User", userSchema)
 
-    const { name, email, password } = req.body
+   const { name, email, password, phone, interest, other_interest } = req.body
+
 
     const exists = await User.findOne({ email })
     if (exists) {
