@@ -172,34 +172,7 @@ function StartTestForm() {
             )}
           </div>
 
-          {/* INTEREST */}
-          <select
-            value={interest}
-            onChange={(e)=>setInterest(e.target.value)}
-            required
-            className="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none"
-          >
-            <option value="">Select Primary Interest</option>
-            <option>Software Development</option>
-            <option>Cloud / DevOps</option>
-            <option>Networking</option>
-            <option>Cybersecurity</option>
-            <option>Data / Analytics</option>
-            <option>AI ML</option>
-            <option>Others</option>
-          </select>
 
-          {/* OTHER INTEREST */}
-          {interest === "Others" && (
-            <input
-              type="text"
-              placeholder="Please specify your interest"
-              value={otherInterest}
-              onChange={(e)=>setOtherInterest(e.target.value)}
-              required
-              className="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none"
-            />
-          )}
 
           {/* BUTTON */}
           <button
@@ -227,3 +200,4 @@ function StartTestForm() {
 }
 
 export default StartTestForm
+
