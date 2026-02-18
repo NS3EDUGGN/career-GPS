@@ -204,7 +204,7 @@ function Home() {
             
             <section className="w-full bg-black">
                 <div className="w-full aspect-video">
-                    <iframe className="w-full h-full" src="https://youtu.be/MyPWI31hk_8?si=Lxa5DB9fFjQb_Urv" title="NS3 Career GPS Overview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                    <iframe className="w-full h-full" src="https://www.youtube.com/embed/MyPWI31hk_8" title="NS3 Career GPS Overview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 </div>
             </section>
 
@@ -228,5 +228,6 @@ function Home() {
   )
 }
 export default Home
+
 
 
