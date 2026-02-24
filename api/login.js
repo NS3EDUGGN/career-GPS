@@ -1,57 +1,37 @@
-import mongoose from "mongoose"
-
-const MONGO_URI = process.env.MONGO_URI
-
-let isConnected = false
-
-async function connectDB() {
-  if (isConnected) return
-  await mongoose.connect(process.env.MONGO_URI)
-  isConnected = true
-}
+import { connectDB } from "./_db.js"
+import User from "./models/User.js"
 
 export default async function handler(req, res) {
 
-  if (req.method !== "POST") {
+  if (req.method !== "POST")
     return res.status(405).json({ message: "Only POST allowed" })
-  }
 
   try {
 
     await connectDB()
 
-    const userSchema = new mongoose.Schema({
-      name: String,
-      email: String,
-      password: String,
-      testGiven: { type: Boolean, default: false },
-      scores: Object
-    })
-
-    const User = mongoose.models.User || mongoose.model("User", userSchema)
-
     const { email, password } = req.body
 
-    // 🔴 important change
-    const user = await User.findOne({ email: email.trim() })
+    const user = await User.findOne({ email })
 
-    if (!user) {
-      return res.status(401).json({ message: "User not found" })
-    }
+    if (!user)
+      return res.status(401).json({ success:false, message:"User not found" })
 
-    // compare properly
-    if (String(user.password).trim() !== String(password).trim()) {
-      return res.status(401).json({ message: "Wrong password" })
-    }
+    if (String(user.password) !== String(password))
+      return res.status(401).json({ success:false, message:"Wrong password" })
 
     return res.status(200).json({
-      message: "Login successful",
-      email: user.email,
-      testGiven: user.testGiven
+      success:true,
+      user:{
+        name:user.name,
+        email:user.email,
+        phone:user.phone,
+        testGiven:user.testGiven
+      }
     })
 
   } catch (err) {
-    console.log(err)
-    return res.status(500).json({ message: err.message })
+    console.log("LOGIN ERROR:", err)
+    return res.status(500).json({ message:"Server error" })
   }
 }
