@@ -4,23 +4,31 @@ import cors from "cors"
 import dotenv from "dotenv"
 
 import authRoutes from "./routes/auth.js"
+import resultRoutes from "./routes/result.js"   // ⭐ ADD THIS
 
 dotenv.config()
 
 const app = express()
 
-// Middlewares
+// ================= MIDDLEWARE =================
 app.use(cors())
 app.use(express.json())
 
-// Routes
+// ================= ROUTES =================
+
+// login & register
 app.use("/api", authRoutes)
 
-// ✅ GOOGLE APPS SCRIPT PROXY (FIXES CORS)
+// admin panel student results (VERY IMPORTANT)
+app.use("/api", resultRoutes)
+
+
+// ================= GOOGLE APPS SCRIPT PROXY =================
 app.post("/api/lead", async (req, res) => {
   try {
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbwEh1cngfYSNx_Whucl72FTWUqYibPdzkMxcFkt1xiQTNyFaPaak3NaIsSIbodk33bj/exec",
+    await fetch(
+      "https://script.google.com/macros/s/AKfycbwEgPfoSG4peAxa9c5-yRdjEa9GEvbJfdWNfIagbBszgFGI7qzP2uf7tmdrVT9rhR9R9g/exec",
+     /* "https://script.google.com/macros/s/AKfycbwmm2CNZaisE_EyRDd7zhILgHlE6c7lMaN-OZmlPrAI8sfODCPC7J19IyP_73XNw9B6/exec",*/
       {
         method: "POST",
         headers: {
@@ -31,18 +39,24 @@ app.post("/api/lead", async (req, res) => {
     )
 
     res.json({ success: true })
+
   } catch (error) {
     console.error("Google Script Error:", error)
     res.status(500).json({ success: false })
   }
 })
 
-// MongoDB connection
+
+// ================= DATABASE =================
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, { dbName: "career" })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("Mongo error:", err))
 
-// Server start
+
+// ================= SERVER =================
 const PORT = process.env.PORT || 5000
-app.listen(PORT, () => console.log(`Server running on ${PORT}`))
+
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`)
+})
