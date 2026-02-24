@@ -33,9 +33,11 @@ const loadStudents = ()=>{
 }
  const toggleContacted = async(id)=>{
   try{
-    await fetch(`/api/contacted/${id}`,{
-      method:"PUT"
-    })
+    await fetch(`/api/contacted`,{
+  method:"PUT",
+  headers:{ "Content-Type":"application/json" },
+  body: JSON.stringify({ id })
+})
     loadStudents()
   }catch(err){
     console.log(err)
@@ -408,3 +410,4 @@ function StatCard({title,value,color}){
 
 
 export default AdminDashboard
+
