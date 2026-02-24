@@ -94,6 +94,7 @@ useEffect(() => {
   const beepRef = useRef(null)
   const navigate = useNavigate()
   const [trackGroup, setTrackGroup] = useState(null)
+  const [answers, setAnswers] = useState([])
 
   /* ---------- SOUND ---------- */
   useEffect(() => {
@@ -178,6 +179,18 @@ const handleTimeUp = () => {
   const handleAnswer = (option) => {
 
     if (hasNavigatedRef.current) return
+     // ⭐ RECORD ANSWER
+  if (currentQuestion) {
+    setAnswers(prev => [
+      ...prev,
+      {
+        question: currentQuestion.question,
+        selected: option.text,
+        career: option.career || option.lockTrack || "general",
+        score: option.score || option.weight || {}
+      }
+    ])
+  }
     setAnsweredInPhase(prev => prev + 1)
     stopBeep()
     // ---- motivational feedback ----
@@ -273,7 +286,7 @@ if (nextAnswered % FEEDBACK_INTERVAL === 0) {
     JSON.stringify(finalScoresRef.current)
   )
 
-  navigate("/result", { state: { scores: finalScoresRef.current } })
+  navigate("/result", { state: { scores: finalScoresRef.current, answers } })
   return prev
 }
       return nextIndex
