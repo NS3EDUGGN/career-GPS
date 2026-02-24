@@ -28,7 +28,7 @@ if (pendingUserData) {
   setLoading(true)
 
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -154,3 +154,4 @@ console.log("Logged in user saved:", data.user)
 }
 
 export default Login
+
