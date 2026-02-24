@@ -11,20 +11,28 @@ function Login() {
  const handleLogin = async (e) => {
   e.preventDefault()
 
-  // 🔥 clear previous session
-  localStorage.removeItem("isLoggedIn")
-  localStorage.removeItem("userEmail")
-  sessionStorage.clear()
+// 🔥 clear previous session BUT KEEP registration data
+localStorage.removeItem("isLoggedIn")
+localStorage.removeItem("userEmail")
+
+// DO NOT delete userData (college/year/course)
+const pendingUserData = localStorage.getItem("userData")
+
+sessionStorage.clear()
+
+// restore after clearing
+if (pendingUserData) {
+  localStorage.setItem("userData", pendingUserData)
+}
 
   setLoading(true)
 
     try {
-      const res = await fetch("/api/login", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ email, password }),
-})
-
+      const res = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      })
 
       if (!res.ok) {
         alert("Incorrect credentials, try again")
@@ -32,9 +40,26 @@ function Login() {
         return
       }
 
-      const data = await res.json()
+const data = await res.json()
+
+if (!data.success) {
+  alert("Invalid credentials")
+  setLoading(false)
+  return
+}
+
+// ⭐ VERY IMPORTANT — store logged-in user
+localStorage.setItem("user", JSON.stringify(data.user))
+// preserve academic info after authentication
+const existingUserData = localStorage.getItem("userData")
+if (existingUserData) {
+  localStorage.setItem("userData", existingUserData)
+}
+
+// optional flag
 localStorage.setItem("isLoggedIn", "true")
-localStorage.setItem("userEmail", data.email || email)
+
+console.log("Logged in user saved:", data.user)
 
 
       setLoading(false)
@@ -129,4 +154,3 @@ localStorage.setItem("userEmail", data.email || email)
 }
 
 export default Login
-
