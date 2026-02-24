@@ -87,7 +87,7 @@ function Result() {
 
     const saveResult = async () => {
       try {
-        await fetch("http://localhost:5000/api/save-result", {
+await fetch("/api/save-result", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -290,3 +290,4 @@ function Result() {
 }
 
 export default Result
+
