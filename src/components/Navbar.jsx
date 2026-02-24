@@ -53,7 +53,7 @@ useEffect(() => {
   const verifyUser = async () => {
     try {
 
-      const res = await fetch(`http://localhost:5000/api/check-user/${email}`)
+      const res = await fetch(`/api/check-user/${email}`)
       const data = await res.json()
 
       // USER DELETED BY ADMIN
@@ -369,4 +369,5 @@ function ExploreDropdown() {
     </div>
   )
 }
+
 
