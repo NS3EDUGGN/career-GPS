@@ -27,13 +27,13 @@ function AdminDashboard(){
 },[])
 
 const loadStudents = ()=>{
-  fetch("http://localhost:5000/api/results")
+  fetch("/api/results")
     .then(res=>res.json())
     .then(data=>setStudents(data))
 }
  const toggleContacted = async(id)=>{
   try{
-    await fetch(`http://localhost:5000/api/contacted/${id}`,{
+    await fetch(`/api/contacted/${id}`,{
       method:"PUT"
     })
     loadStudents()
@@ -53,7 +53,7 @@ const loadStudents = ()=>{
 
   try {
 
-    const res = await fetch(`http://localhost:5000/api/student/${id}`, {
+    const res = await fetch(`/api/student/${id}`, {
       method: "DELETE"
     })
 
@@ -405,5 +405,6 @@ function StatCard({title,value,color}){
     
   )
 }
+
 
 export default AdminDashboard
