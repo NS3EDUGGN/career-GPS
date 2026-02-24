@@ -202,11 +202,18 @@ function Home() {
                 </div>
             </section>
             
-            <section className="w-full bg-black">
-                <div className="w-full aspect-video">
-                    <iframe className="w-full h-full" src="https://www.youtube.com/embed/MyPWI31hk_8" title="NS3 Career GPS Overview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                </div>
-            </section>
+<section className="w-full bg-black">
+  <div className="w-full aspect-video">
+    <video
+      className="w-full h-full object-cover"
+      controls
+      preload="metadata"
+    >
+      <source src="/images/ns3-overview.MP4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</section>
 
 
       <section className="py-20 bg-[#2F6F6A] text-white text-center">
@@ -228,6 +235,3 @@ function Home() {
   )
 }
 export default Home
-
-
-
