@@ -10,6 +10,8 @@ import Login from "./pages/Login"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Instructions from "./pages/Instructions"
 import './App.css'
+import AdminLogin from "./pages/AdminLogin"
+import AdminDashboard from "./pages/AdminDashboard"
 
 function App() {
   const [count, setCount] = useState(0)
@@ -54,6 +56,8 @@ function App() {
       </ProtectedRoute>
     }
   />
+<Route path="/admin" element={<AdminLogin/>} />
+<Route path="/admin/dashboard" element={<AdminDashboard/>} />
 
   {/* Diagnosis Page (locked) */}
   <Route
