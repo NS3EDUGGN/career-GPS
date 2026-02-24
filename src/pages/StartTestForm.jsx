@@ -36,7 +36,7 @@ function StartTestForm() {
   try {
 
     // 1️⃣ Save lead (NO PASSWORD)
-    await fetch("http://localhost:5000/api/lead", {
+    await fetch("/api/lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(leadData),
@@ -56,7 +56,7 @@ function StartTestForm() {
     */}
 
     // 2️⃣ Register account
-    const res = await fetch("http://localhost:5000/api/register", {
+    const res = await fetch("/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -266,3 +266,4 @@ function StartTestForm() {
 }
 
 export default StartTestForm
+
