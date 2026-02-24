@@ -55,9 +55,11 @@ const loadStudents = ()=>{
 
   try {
 
-    const res = await fetch(`/api/student/${id}`, {
-      method: "DELETE"
-    })
+   const res = await fetch(`/api/delete-student`, {
+  method: "DELETE",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ id })
+})
 
     const data = await res.json()
     console.log("Delete response:", data)
@@ -410,4 +412,5 @@ function StatCard({title,value,color}){
 
 
 export default AdminDashboard
+
 
