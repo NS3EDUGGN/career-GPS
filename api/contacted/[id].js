@@ -3,20 +3,19 @@ import Result from "../models/Result.js"
 
 export default async function handler(req, res) {
 
-  // only PUT allowed
+  // accept only PUT
   if (req.method !== "PUT") {
-    return res.status(405).json({ message: "Only PUT allowed" })
+    return res.status(405).json({ message: "Method not allowed" })
   }
 
   try {
 
     await connectDB()
 
-    // ⭐ GET ID FROM URL
     const { id } = req.query
 
     if (!id) {
-      return res.status(400).json({ message: "Student ID missing" })
+      return res.status(400).json({ message: "Missing student id" })
     }
 
     const student = await Result.findById(id)
@@ -25,9 +24,8 @@ export default async function handler(req, res) {
       return res.status(404).json({ message: "Student not found" })
     }
 
-    // ⭐ TOGGLE CONTACT STATUS
+    // TOGGLE STATUS
     student.contacted = !student.contacted
-
     await student.save()
 
     return res.status(200).json({
@@ -36,7 +34,7 @@ export default async function handler(req, res) {
     })
 
   } catch (err) {
-    console.log("CONTACT TOGGLE ERROR:", err)
+    console.log("CONTACT ERROR:", err)
     return res.status(500).json({ message: "Server error" })
   }
 }
