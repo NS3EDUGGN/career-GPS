@@ -74,6 +74,23 @@ function StartTestForm() {
       setLoading(false)
       return
     }
+
+    // 👉 SEND EMAIL HERE
+await fetch("/api/sendMail", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    college: data.college,
+    course: data.course,
+    year: data.year
+  })
+});
+    
     localStorage.setItem("userData", JSON.stringify(data))
     localStorage.setItem("studentProfile", JSON.stringify({
   name: data.name,
@@ -266,4 +283,5 @@ function StartTestForm() {
 }
 
 export default StartTestForm
+
 
