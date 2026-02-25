@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 
 const MONGO_URI = process.env.MONGO_URI
+const MONGO_DB = process.env.MONGO_DB   // 👈 NEW
 
 if (!MONGO_URI) {
   throw new Error("MONGO_URI not found in environment variables")
@@ -18,6 +19,7 @@ export async function connectDB() {
 
   if (!cached.promise) {
     cached.promise = mongoose.connect(MONGO_URI, {
+      dbName: MONGO_DB,      // ⭐ THIS SWITCHES DATABASE
       bufferCommands: false
     })
   }
