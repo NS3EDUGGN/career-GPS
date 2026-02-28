@@ -204,14 +204,13 @@ function Home() {
             
 <section className="w-full bg-black">
   <div className="w-full aspect-video">
-    <video
-      className="w-full h-full object-cover"
-      controls
-      preload="metadata"
-    >
-      <source src="/images/ns3-overview.MP4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+    <iframe
+      className="w-full h-full"
+      src="https://www.youtube.com/embed/1of2FCUNtXw"
+      title="Fellowship Program Overview"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+    ></iframe>
   </div>
 </section>
 
@@ -235,3 +234,4 @@ function Home() {
   )
 }
 export default Home
+
