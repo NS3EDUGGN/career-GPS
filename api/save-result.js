@@ -35,21 +35,21 @@ export default async function handler(req, res) {
     })
 
     // ⭐ SEND TO GOOGLE SHEET
-    await fetch(`${process.env.BASE_URL}/api/lead`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        phone,
-        college,
-        course,
-        year,
-        career: topCareer
-      })
-    })
+    await fetch(process.env.GSHEET_URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    name,
+    email,
+    phone,
+    college,
+    course,
+    year,
+    career: topCareer
+  })
+})
 
     res.status(200).json({ success:true })
 
