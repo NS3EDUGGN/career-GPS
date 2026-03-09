@@ -18,6 +18,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
+    /*
     const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
       method: "POST",
       headers: {
@@ -46,7 +47,7 @@ export default async function handler(req, res) {
     if (!response.ok) {
       return res.status(500).json({ message: text });
     }
-
+*/
     return res.status(200).json({ message: "Email sent successfully" });
 
   } catch (err) {
